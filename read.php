@@ -59,6 +59,10 @@
         // $ramenData[] = $line;
         // csvデータを連想配列に格納する。（key：ヘッダー行のタイトル、value：データ行の値）
         $ramenData[] = array_combine($header, $line);
+        // 改行コードをエスケープ
+        $ramenData = array_map(function($value) {
+            return str_replace(["\r\n", "\n"], '\\n', $value);
+        }, $ramenData);
     }
     echo "</table></div>";
     fclose($file);

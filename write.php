@@ -37,6 +37,7 @@
     $email = $_POST["email"];
     $age = $_POST["age"];
     $ageDisp = "";
+    // POSTできた値がキーとして存在している場合は値を設定する。
     if(isset($ageOp[$age])){
         $ageDisp = $ageOp[$age];
     }
@@ -59,12 +60,13 @@
     $c = ",";
     $str = date("Y年m月d日 H時i分s秒");
     $str .= $c.$name.$c.$email.$c.$ageDisp.$c.$ramenDisp.$c.$toppingDisp.$c.$volumeDisp.$c.$memo;
+    $strArray = explode($c, $str);  // 改行対応でダブルクォート付加をしfputcsvの実行のため、配列化
     $file = fopen("./data/ramendata.csv", "a");
-    fwrite($file, $str."\n");
+    fputcsv($file, $strArray);
     fclose($file);
 
     // header("Location: index.php");
-    // exit;
+    // exit();
 ?>
 
 <html>
