@@ -28,25 +28,25 @@
         for ($i = 1; $i < count($line); $i++){
             switch($i){
                 case 1:
-                    echo '<td class="name">'.$line[$i]."</td>";
+                    echo '<td class="name">'.htmlspecialchars($line[$i], ENT_QUOTES, "UTF-8")."</td>";
                     break;
                 case 2:
-                    echo '<td class="mail">'.$line[$i]."</td>";
+                    echo '<td class="mail">'.htmlspecialchars($line[$i], ENT_QUOTES, "UTF-8")."</td>";
                     break;
                 case 3:
-                    echo '<td class="age">'.$line[$i]."</td>";
+                    echo '<td class="age">'.htmlspecialchars($line[$i], ENT_QUOTES, "UTF-8")."</td>";
                     break;
                 case 4:
-                    echo '<td class="ramen">'.$line[$i]."</td>";
+                    echo '<td class="ramen">'.htmlspecialchars($line[$i], ENT_QUOTES, "UTF-8")."</td>";
                     break;
                 case 5:
-                    echo '<td class="topping">'.$line[$i]."</td>";
+                    echo '<td class="topping">'.htmlspecialchars($line[$i], ENT_QUOTES, "UTF-8")."</td>";
                     break;
                 case 6:
-                    echo '<td class="volume">'.$line[$i]."</td>";
+                    echo '<td class="volume">'.htmlspecialchars($line[$i], ENT_QUOTES, "UTF-8")."</td>";
                     break;
                 case 7:
-                    echo '<td class="comment">'.$line[$i]."</td>";
+                    echo '<td class="comment">'.nl2br(htmlspecialchars($line[$i], ENT_QUOTES, "UTF-8"))."</td>";
                     break;
                 default:
                     echo "<td></td>";
@@ -79,8 +79,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-<!-- <script src="js/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script> -->
 <script>
     const ramenJson = JSON.parse('<?=$ramenJson ?>');
     console.log(ramenJson);
@@ -88,11 +86,13 @@
     // 年代の集計処理
     const aggregatedAge = {};
     ramenJson.forEach(ramen => {
+        console.log("ramen：" + JSON.stringify(ramen));
         if(aggregatedAge[ramen.age]){
             aggregatedAge[ramen.age]++;
         } else {
             aggregatedAge[ramen.age] = 1;
         }
+        console.log("aggregatedAge：" + JSON.stringify(aggregatedAge));
     });
     console.log("年代の集計結果：" + JSON.stringify(aggregatedAge));
     // 集計結果をchart.jsに利用するため配列に格納する。
